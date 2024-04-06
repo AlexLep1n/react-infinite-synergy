@@ -1,7 +1,12 @@
 import "./App.css";
+import UsersList from "./components/blocks/UsersList";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <UsersList />
+    </>
+  );
 }
 
 export default App;

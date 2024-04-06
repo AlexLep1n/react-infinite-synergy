@@ -1,0 +1,17 @@
+.users-list {
+  padding: 10px;
+  width: 400px;
+  height: 300px;
+  overflow: auto;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}

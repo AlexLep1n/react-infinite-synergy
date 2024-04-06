@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
+import classes from "./User.module.css";
 import userIcon from "/img/blue-user-icon.svg";
 
-export default function User({ id }) {
+export default function User({ userId }) {
   return (
     <>
-      <div>
-        <img src={userIcon} alt="blue user icon" />
-        <p>{`Ползователь ${id}`}</p>
-      </div>
+      <img src={userIcon} className={classes.img} alt="blue user icon" />
+      <p className={classes.txt}>{`Ползователь ${userId}`}</p>
     </>
   );
 }
