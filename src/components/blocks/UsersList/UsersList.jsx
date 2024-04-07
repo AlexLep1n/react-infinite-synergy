@@ -1,11 +1,11 @@
 import classes from "./UsersList.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import User from "../parts/User";
+import User from "../../parts/User/User";
 import { useEffect } from "react";
-import { fetchWorkers } from "../../api/fetchWorkers";
+import { fetchWorkers } from "../../../api/fetchWorkers";
+import { chooseUser } from "../../../state/reducers/usersSlice";
 export default function UsersList() {
   const users = useSelector((state) => state.users.value.entities);
-  console.log(users);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +15,11 @@ export default function UsersList() {
   return (
     <div className={classes["users-list"]}>
       {users.map((user) => (
-        <div className={classes.user} key={user.id}>
+        <div
+          onClick={() => dispatch(chooseUser())}
+          className={classes.user}
+          key={user.id}
+        >
           <User userId={user.id} />
         </div>
       ))}
