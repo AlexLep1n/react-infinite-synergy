@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function UserCard() {
   const selectedUser = useSelector((state) => state.users.selectedUser);
   const [userData, setUserData] = useState({
-    id: 0,
+    id: null,
     firstName: "",
     lastName: "",
     age: "",
@@ -21,7 +21,7 @@ export default function UserCard() {
 
   return (
     <div className={classes.form}>
-      <h3 className={classes.title}>{`Пользователь ${userData.id}`}</h3>
+      <h3 className={classes.title}>{`Пользователь ${userData.id ?? ""}`}</h3>
       <div className={classes.content}>
         <div>
           <img

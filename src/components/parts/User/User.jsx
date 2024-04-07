@@ -6,7 +6,7 @@ export default function User({ userId }) {
   return (
     <>
       <img src={userIcon} className={classes.img} alt="blue user icon" />
-      <p className={classes.txt}>{`Ползователь ${userId}`}</p>
+      <p className={classes.txt}>{`Пользователь ${userId}`}</p>
     </>
   );
 }
