@@ -14,9 +14,12 @@ export const usersSlice = createSlice({
   },
   reducers: {
     chooseUser: (state, { payload: userId }) => {
-      state.selectedUser = {
-        ...state.value.entities.filter((user) => user.id === userId),
-      };
+      state.selectedUser = state.value.entities.filter(
+        (user) => user.id === userId
+      )[0];
+    },
+    saveUser: (state, { payload: userData }) => {
+      state.value.entities.splice(userData.id - 1, 1, userData);
     },
   },
   extraReducers: (builder) => {
@@ -52,6 +55,6 @@ export const usersSlice = createSlice({
 //   }
 // );
 
-export const { chooseUser } = usersSlice.actions;
+export const { chooseUser, saveUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

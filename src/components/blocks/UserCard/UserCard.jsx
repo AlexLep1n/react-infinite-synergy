@@ -1,10 +1,13 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { saveUser } from "../../../state/reducers/usersSlice";
 // import UserInput from "../../ui/UserInput";
 import classes from "./UserCard.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function UserCard() {
-  const selectedUser = useSelector((state) => state.users.selectedUser);
+  const { selectedUser } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+
   const [userData, setUserData] = useState({
     id: null,
     firstName: "",
@@ -14,19 +17,43 @@ export default function UserCard() {
     jobTitle: "",
     company: "",
   });
-  const [disabled, setDisabled] = useState(true);
+
+  const [disabled, setDisabled] = useState(false);
+
+  function edit(prop, e) {
+    setUserData({ ...userData, ...{ [prop]: e.target.value } });
+  }
+
+  function saveData(userData) {
+    dispatch(saveUser(userData));
+    setUserData({
+      id: null,
+      firstName: "",
+      lastName: "",
+      age: "",
+      email: "",
+      jobTitle: "",
+      company: "",
+    });
+  }
+
+  useEffect(() => {
+    setUserData({ ...selectedUser });
+  }, [selectedUser]);
 
   console.log("userData: ", userData);
-  console.log("selectedUser: ", selectedUser);
+  // console.log("selectedUser: render", selectedUser);
 
   return (
     <div className={classes.form}>
-      <h3 className={classes.title}>{`Пользователь ${userData.id ?? ""}`}</h3>
+      <h3 className={classes.title}>{`Пользователь ${
+        selectedUser.id ?? ""
+      }`}</h3>
       <div className={classes.content}>
         <div>
           <img
             className={classes.img}
-            src="public/img/user-profile-icon.svg"
+            src="./img/user-profile-icon.svg"
             alt="user profile icon"
           />
         </div>
@@ -40,6 +67,7 @@ export default function UserCard() {
               placeholder="First name"
               className={classes.input}
               disabled={disabled}
+              onChange={(e) => edit("firstName", e)}
             />
           </label>
 
@@ -52,6 +80,7 @@ export default function UserCard() {
               placeholder="Last name"
               className={classes.input}
               disabled={disabled}
+              onChange={(e) => edit("lastName", e)}
             />
           </label>
 
@@ -64,6 +93,7 @@ export default function UserCard() {
               placeholder="Age"
               className={classes.input}
               disabled={disabled}
+              onChange={(e) => edit("age", e)}
             />
           </label>
 
@@ -76,6 +106,7 @@ export default function UserCard() {
               placeholder="Email"
               className={classes.input}
               disabled={disabled}
+              onChange={(e) => edit("email", e)}
             />
           </label>
 
@@ -88,6 +119,7 @@ export default function UserCard() {
               placeholder="Job title"
               className={classes.input}
               disabled={disabled}
+              onChange={(e) => edit("jobTitle", e)}
             />
           </label>
 
@@ -100,6 +132,7 @@ export default function UserCard() {
               placeholder="Company"
               className={classes.input}
               disabled={disabled}
+              onChange={(e) => edit("company", e)}
             />
           </label>
         </div>
@@ -111,7 +144,9 @@ export default function UserCard() {
         >
           Edit
         </button>
-        <button className={classes.button}>Save</button>
+        <button className={classes.button} onClick={() => saveData(userData)}>
+          Save
+        </button>
       </div>
     </div>
   );
