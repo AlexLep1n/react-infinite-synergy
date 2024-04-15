@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchWorkers } from "../../api/fetchWorkers";
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import { binarySearch } from "../../helpers/binarySearch";
 
 export const usersSlice = createSlice({
   name: "users",
@@ -14,9 +14,7 @@ export const usersSlice = createSlice({
   },
   reducers: {
     chooseUser: (state, { payload: userId }) => {
-      state.selectedUser = state.value.entities.filter(
-        (user) => user.id === userId
-      )[0];
+      state.selectedUser = binarySearch(state.value.entities, userId);
     },
     saveUser: (state, { payload: userData }) => {
       state.value.entities.splice(userData.id - 1, 1, userData);
@@ -38,22 +36,6 @@ export const usersSlice = createSlice({
       });
   },
 });
-
-// const API_URL =
-//   "http://localhost:5173/react-infinite-synergy/src/api/workers.json";
-
-// export const fetchWorkers = createAsyncThunk(
-//   "todos/fetchWorkers",
-//   async function () {
-//     const response = await fetch(API_URL);
-//     if (!response.ok) {
-//       throw new Error(`Request failed, status ${response.status}`);
-//     }
-
-//     const data = await response.json();
-//     return data;
-//   }
-// );
 
 export const { chooseUser, saveUser } = usersSlice.actions;
 
