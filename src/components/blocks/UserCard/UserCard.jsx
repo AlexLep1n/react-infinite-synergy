@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { saveUser } from "../../../state/reducers/usersSlice";
-// import UserInput from "../../ui/UserInput";
 import classes from "./UserCard.module.css";
 import { useEffect, useState } from "react";
+import UserInput from "../../ui/UserInput";
 
 export default function UserCard() {
   const { selectedUser } = useSelector((state) => state.users);
@@ -18,7 +18,7 @@ export default function UserCard() {
     company: "",
   });
 
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   function edit(prop, e) {
     setUserData({ ...userData, ...{ [prop]: e.target.value } });
@@ -41,9 +41,6 @@ export default function UserCard() {
     setUserData({ ...selectedUser });
   }, [selectedUser]);
 
-  console.log("userData: ", userData);
-  // console.log("selectedUser: render", selectedUser);
-
   return (
     <div className={classes.form}>
       <h3 className={classes.title}>{`Пользователь ${
@@ -58,83 +55,53 @@ export default function UserCard() {
           />
         </div>
         <div className={classes.data}>
-          <label htmlFor="firstName" className={classes.label}>
-            First name
-            <input
-              type="text"
-              value={userData.firstName}
-              id="firstName"
-              placeholder="First name"
-              className={classes.input}
-              disabled={disabled}
-              onChange={(e) => edit("firstName", e)}
-            />
-          </label>
+          <UserInput
+            labelName={"First name"}
+            keyName={"firstName"}
+            userData={userData}
+            disabled={disabled}
+            edit={edit}
+          />
 
-          <label htmlFor="lastName" className={classes.label}>
-            Last name
-            <input
-              type="text"
-              value={userData.lastName}
-              id="lastName"
-              placeholder="Last name"
-              className={classes.input}
-              disabled={disabled}
-              onChange={(e) => edit("lastName", e)}
-            />
-          </label>
+          <UserInput
+            labelName={"Last name"}
+            keyName={"lastName"}
+            userData={userData}
+            disabled={disabled}
+            edit={edit}
+          />
 
-          <label htmlFor="age" className={classes.label}>
-            Age
-            <input
-              type="text"
-              value={userData.age}
-              id="age"
-              placeholder="Age"
-              className={classes.input}
-              disabled={disabled}
-              onChange={(e) => edit("age", e)}
-            />
-          </label>
+          <UserInput
+            labelName={"Age"}
+            keyName={"age"}
+            userData={userData}
+            disabled={disabled}
+            edit={edit}
+          />
 
-          <label htmlFor="email" className={classes.label}>
-            Email
-            <input
-              type="text"
-              value={userData.email}
-              id="email"
-              placeholder="Email"
-              className={classes.input}
-              disabled={disabled}
-              onChange={(e) => edit("email", e)}
-            />
-          </label>
+          <UserInput
+            labelName={"Email"}
+            keyName={"email"}
+            userData={userData}
+            disabled={disabled}
+            edit={edit}
+          />
 
-          <label htmlFor="jobTitle" className={classes.label}>
-            Job title
-            <input
-              type="text"
-              value={userData.jobTitle}
-              id="jobTitle"
-              placeholder="Job title"
-              className={classes.input}
-              disabled={disabled}
-              onChange={(e) => edit("jobTitle", e)}
-            />
-          </label>
+          <UserInput
+            labelName={"Job title"}
+            keyName={"jobTitle"}
+            userData={userData}
+            disabled={disabled}
+            edit={edit}
+          />
 
-          <label htmlFor="company" className={classes.label}>
-            Company
-            <input
-              type="text"
-              value={userData.company}
-              id="company"
-              placeholder="Company"
-              className={classes.input}
-              disabled={disabled}
-              onChange={(e) => edit("company", e)}
-            />
-          </label>
+          <UserInput
+            labelName={"Company"}
+            keyName={"company"}
+            userData={userData}
+            disabled={disabled}
+            edit={edit}
+          />
         </div>
       </div>
       <div className={classes.buttons}>
@@ -150,13 +117,4 @@ export default function UserCard() {
       </div>
     </div>
   );
-}
-{
-  /* {Object.keys(selectedUser).length !== 0 &&
-          Object.values(selectedUser).map((value) => {
-            console.log(value);
-            if (Number.isNaN(value)) {
-              return <UserInput userValue={value} key={value} />;
-            }
-          })} */
 }

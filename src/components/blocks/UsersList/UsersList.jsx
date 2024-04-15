@@ -6,24 +6,34 @@ import { fetchWorkers } from "../../../api/fetchWorkers";
 import { chooseUser } from "../../../state/reducers/usersSlice";
 
 export default function UsersList() {
-  const users = useSelector((state) => state.users.value.entities);
+  const { entities, status, error } = useSelector((state) => state.users.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchWorkers());
   }, [dispatch]);
 
+  const clickHandler = () => dispatch(fetchWorkers());
+
   return (
     <div className={classes["users-list"]}>
-      {users.map((user) => (
-        <div
-          onClick={() => dispatch(chooseUser(user.id))}
-          className={classes.user}
-          key={user.id}
-        >
-          <User userId={user.id} />
+      {status === "loading" && <h3>Loading...</h3>}
+      {status === "success" &&
+        entities.map((user) => (
+          <div
+            onClick={() => dispatch(chooseUser(user.id))}
+            className={classes.user}
+            key={user.id}
+          >
+            <User userId={user.id} />
+          </div>
+        ))}
+      {error && (
+        <div>
+          <p>{error}</p>
+          <button onClick={clickHandler}>Retry</button>
         </div>
-      ))}
+      )}
     </div>
   );
 }

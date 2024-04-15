@@ -1,19 +1,27 @@
 /* eslint-disable react/prop-types */
-export default function UserInput({ userKey, userValue, onChange }) {
+import classes from "./UserInput.module.css";
+
+export default function UserInput({
+  labelName,
+  keyName,
+  userData,
+  disabled,
+  edit,
+}) {
   return (
     <>
-      <label>
-        {userKey}
-        <input type="text" value={userValue} onChange={onChange} />
-      </label>
-
-      {/* <label htmlFor="lastName">Last name: </label>
+      <label htmlFor={keyName} className={classes.label}>
+        {labelName}
         <input
           type="text"
-          value={userValue}
-          id="lastName"
-          onChange={onChange}
-        /> */}
+          value={userData[keyName]}
+          id={keyName}
+          placeholder={labelName}
+          className={classes.input}
+          disabled={disabled}
+          onChange={(e) => edit(keyName, e)}
+        />
+      </label>
     </>
   );
 }
