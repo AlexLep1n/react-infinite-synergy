@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchWorkers } from "../../api/fetchWorkers";
-import { binarySearch } from "../../helpers/binarySearch";
+import { recursiveBinarySearch } from "../../helpers/binarySearch";
 
 export const usersSlice = createSlice({
   name: "users",
@@ -14,7 +14,12 @@ export const usersSlice = createSlice({
   },
   reducers: {
     chooseUser: (state, { payload: userId }) => {
-      state.selectedUser = binarySearch(state.value.entities, userId);
+      state.selectedUser = recursiveBinarySearch(
+        state.value.entities,
+        userId,
+        0,
+        state.value.entities.length
+      );
     },
     saveUser: (state, { payload: userData }) => {
       state.value.entities.splice(userData.id - 1, 1, userData);
