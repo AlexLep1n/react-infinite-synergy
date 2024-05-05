@@ -10,3 +10,5 @@ Technology Stack:
 - React
 - Redux
 - Redux Toolkit
+
+[GitHub Pages](https://alexlep1n.github.io/react-infinite-synergy/)
